@@ -13,6 +13,7 @@
 		})
 		let result = await response.json()
 		console.dir(result)
+		getMessages()
 	}
 
 	async function getMessages() {
