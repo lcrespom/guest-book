@@ -1,7 +1,9 @@
 <script lang="ts">
 	import EntryForm from './entry-form.svelte'
 
-	function submitEntry() {}
+	function submitEntry(evt: CustomEvent) {
+		console.dir(evt.detail)
+	}
 </script>
 
 <article class="mx-auto">
