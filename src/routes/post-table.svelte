@@ -1,8 +1,11 @@
 <script lang="ts">
-	let messages = [
-		{ name: 'Luis', message: 'Hello there' },
-		{ name: 'Maggie', message: 'How are you' }
-	]
+	type Message = {
+		name: string
+		message: string
+		timestamp: string
+	}
+
+	export let messages: Message[]
 </script>
 
 <div class="card mt-3">

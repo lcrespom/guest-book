@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte'
 	import EntryForm from './entry-form.svelte'
 	import PostTable from './post-table.svelte'
 
@@ -13,12 +14,28 @@
 		let result = await response.json()
 		console.dir(result)
 	}
+
+	async function getMessages() {
+		let response = await fetch('/api/messages')
+		let result = await response.json()
+		if (result.status == 'OK') {
+			messages = result.messages
+			console.dir(messages)
+		} else {
+			console.error('Error:')
+			console.error(result)
+		}
+	}
+
+	onMount(getMessages)
+
+	let messages: any[] = []
 </script>
 
 <article class="mx-auto">
 	<h1 class="text-center">Guest Book</h1>
 	<EntryForm on:submit={submitEntry} />
-	<PostTable />
+	<PostTable {messages} />
 </article>
 
 <style>
