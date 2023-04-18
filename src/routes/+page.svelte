@@ -2,8 +2,16 @@
 	import EntryForm from './entry-form.svelte'
 	import PostTable from './post-table.svelte'
 
-	function submitEntry(evt: CustomEvent) {
-		console.dir(evt.detail)
+	async function submitEntry(evt: CustomEvent) {
+		let response = await fetch('/api/messages', {
+			method: 'POST',
+			body: JSON.stringify(evt.detail),
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+		let result = await response.json()
+		console.dir(result)
 	}
 </script>
 
