@@ -10,12 +10,9 @@ async function initMongoDB() {
 	return db.collection('messages')
 }
 
-// function closeMongo() {
-// 	client.close()
-// }
-
 let messages = await initMongoDB()
 
+//----- POST: add a new message -----
 export const POST = (async ({ request }) => {
 	try {
 		let { name, message } = await request.json()
@@ -26,6 +23,16 @@ export const POST = (async ({ request }) => {
 		} else {
 			return json({ status: 'NotAcknowledged' })
 		}
+	} catch (e) {
+		return json({ status: 'Error', detail: '' + e })
+	}
+}) satisfies RequestHandler
+
+//----- GET: get most recent messages, latest first -----
+export const GET = (async () => {
+	try {
+		let result = await messages.find().sort({ timestamp: -1 }).limit(10).toArray()
+		return json({ status: 'OK', messages: result })
 	} catch (e) {
 		return json({ status: 'Error', detail: '' + e })
 	}
