@@ -2,7 +2,11 @@
 	import type { Message } from '$lib/model/message'
 
 	export let messages: Message[]
-	// If I don't put a comment here, syntax highlighting fails
+
+	function unformatTimestamp(iso: string): [string, string] {
+		let [date, time] = iso.split('T')
+		return [date, time.split('.')[0]]
+	}
 </script>
 
 <div class="card mt-3">
@@ -19,11 +23,12 @@
 			</thead>
 			<tbody>
 				{#each messages as message}
+					{@const [date, time] = unformatTimestamp(message.timestamp)}
 					<tr>
 						<td>{message.name}</td>
 						<td>{message.message}</td>
-						<td>asdf</td>
-						<td>defs</td>
+						<td>{date}</td>
+						<td>{time}</td>
 					</tr>
 				{/each}
 			</tbody>
