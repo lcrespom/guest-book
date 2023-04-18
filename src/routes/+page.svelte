@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
+	import type { Message } from '$lib/model/message'
 	import EntryForm from './entry-form.svelte'
 	import PostTable from './post-table.svelte'
 
@@ -30,7 +31,7 @@
 
 	onMount(getMessages)
 
-	let messages: any[] = []
+	let messages: Message[] = []
 </script>
 
 <article class="mx-auto">

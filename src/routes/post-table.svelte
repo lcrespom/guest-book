@@ -1,11 +1,8 @@
 <script lang="ts">
-	type Message = {
-		name: string
-		message: string
-		timestamp: string
-	}
+	import type { Message } from '$lib/model/message'
 
 	export let messages: Message[]
+	// If I don't put a comment here, syntax highlighting fails
 </script>
 
 <div class="card mt-3">
