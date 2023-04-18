@@ -1,2 +1,16 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import EntryForm from './entry-form.svelte'
+
+	function submitEntry() {}
+</script>
+
+<article class="mx-auto">
+	<h1 class="text-center">Guest Book</h1>
+	<EntryForm on:submit={submitEntry} />
+</article>
+
+<style>
+	article {
+		max-width: 50em;
+	}
+</style>
