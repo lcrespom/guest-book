@@ -12,7 +12,7 @@
 
 <div class="card mt-4">
 	<div class="card-header fw-bold">Write your message</div>
-	<form class="p-4" on:submit|preventDefault={submitForm}>
+	<form class="m-4" on:submit|preventDefault={submitForm}>
 		<div class="row mb-3">
 			<label for="input-name" class="col-sm-2 col-form-label text-end">Name</label>
 			<div class="col-sm-10">
