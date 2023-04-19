@@ -1,13 +1,18 @@
 import { json } from '@sveltejs/kit'
 import type { RequestHandler } from '@sveltejs/kit'
-import { MongoClient } from 'mongodb'
+import { Collection, MongoClient } from 'mongodb'
 
 async function initMongoDB() {
-	const uri = 'mongodb://localhost:27017/testdb'
-	const client = new MongoClient(uri)
-	await client.connect()
-	let db = client.db()
-	return db.collection('messages')
+	try {
+		const uri = 'mongodb://localhost:27017/testdb'
+		const client = new MongoClient(uri)
+		await client.connect()
+		let db = client.db()
+		return db.collection('messages')
+	} catch (e) {
+		console.error(e)
+		return {} as Collection
+	}
 }
 
 let messages = await initMongoDB()
