@@ -1,11 +1,13 @@
 import { json } from '@sveltejs/kit'
 import type { RequestHandler } from '@sveltejs/kit'
+import { dev } from '$app/environment'
 import { Collection, MongoClient } from 'mongodb'
+
+let MONGODB_URI = ''
 
 async function initMongoDB() {
 	try {
-		const uri = 'mongodb://localhost:27017/testdb'
-		const client = new MongoClient(uri)
+		const client = new MongoClient(MONGODB_URI)
 		await client.connect()
 		let db = client.db()
 		return db.collection('messages')
@@ -15,6 +17,13 @@ async function initMongoDB() {
 	}
 }
 
+if (dev) {
+	console.log('Development environment')
+	MONGODB_URI = 'mongodb://localhost:27017/testdb'
+} else {
+	console.log('Production environment')
+	MONGODB_URI = 'mongodb://http://10.243.64.4:27017/testdb'
+}
 let messages = await initMongoDB()
 
 //----- POST: add a new message -----
