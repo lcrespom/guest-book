@@ -22,7 +22,7 @@ if (dev) {
 	MONGODB_URI = 'mongodb://localhost:27017/testdb'
 } else {
 	console.log('Production environment')
-	MONGODB_URI = 'mongodb://http://10.243.64.4:27017/testdb'
+	MONGODB_URI = 'mongodb://10.243.64.4:27017/testdb'
 }
 let messages = await initMongoDB()
 
