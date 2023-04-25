@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit'
 import type { RequestHandler } from '@sveltejs/kit'
 import { dev } from '$app/environment'
 import { Collection, MongoClient } from 'mongodb'
+import { env } from '$env/dynamic/private'
 
 let MONGODB_URI = ''
 
@@ -17,13 +18,16 @@ async function initMongoDB() {
 	}
 }
 
+let rtenv = ''
 if (dev) {
-	console.log('Development environment')
 	MONGODB_URI = 'mongodb://localhost:27017/testdb'
+	rtenv = 'Development'
 } else {
 	console.log('Production environment')
-	MONGODB_URI = 'mongodb://10.243.64.4:27017/testdb'
+	MONGODB_URI = env.MONGODB_URI || 'mongodb://10.243.64.4:27017/testdb'
+	rtenv = 'Production'
 }
+console.log(rtenv + ' environment, connecting to ' + MONGODB_URI)
 let messages = await initMongoDB()
 
 //----- POST: add a new message -----
@@ -38,6 +42,7 @@ export const POST = (async ({ request }) => {
 			return json({ status: 'NotAcknowledged' })
 		}
 	} catch (e) {
+		console.error(e)
 		return json({ status: 'Error', detail: '' + e })
 	}
 }) satisfies RequestHandler
@@ -48,6 +53,7 @@ export const GET = (async () => {
 		let result = await messages.find().sort({ timestamp: -1 }).limit(10).toArray()
 		return json({ status: 'OK', messages: result })
 	} catch (e) {
+		console.error(e)
 		return json({ status: 'Error', detail: '' + e })
 	}
 }) satisfies RequestHandler
