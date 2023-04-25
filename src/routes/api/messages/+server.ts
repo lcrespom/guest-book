@@ -29,7 +29,6 @@ if (dev) {
 	MONGODB_URI = 'mongodb://localhost:27017/testdb'
 	rtenv = 'Development'
 } else {
-	console.log('Production environment')
 	MONGODB_URI = env.MONGODB_URI || 'mongodb://10.243.64.4:27017/testdb'
 	rtenv = 'Production'
 }
