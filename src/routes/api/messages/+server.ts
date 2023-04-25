@@ -6,9 +6,15 @@ import { env } from '$env/dynamic/private'
 
 let MONGODB_URI = ''
 
+let options = {
+	tls: true,
+	tlsCAFile: '/app/mongodb.cert',
+	useUnifiedTopology: true
+}
+
 async function initMongoDB() {
 	try {
-		const client = new MongoClient(MONGODB_URI)
+		const client = new MongoClient(MONGODB_URI, options)
 		await client.connect()
 		let db = client.db()
 		return db.collection('messages')
